@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Detail</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: Poppins, Arial, sans-serif;
+        margin: 0;
+      }
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background: #f8f8f8;
+      }
+      .logo img {
+        height: 40px;
+      }
+      .nav-btns a {
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+      }
+      /* cart count bubble */
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -12px;
+        background: red;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 50%;
+      }
+      #product_details {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 24px;
+        padding: 24px;
+        max-width: 1100px;
+        margin: auto;
+      }
+      .d-product-img img {
+        width: 100%;
+        max-width: 420px;
+        border-radius: 12px;
+      }
+      .btn-primary {
+        background: #111;
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+      }
+      .quantity {
+        margin-top: 10px;
+      }
+      input[type="number"] {
+        width: 60px;
+        padding: 4px;
+      }
+    </style>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <nav class="navigation">
+      <a class="logo" href="/indext.html">
+        <img
+          alt="logo"
+          src="../images/BgSub_images_logo.png"
+          width="100px"
+          height="200px"
+        />
+      </a>
+      <div class="nav-btns">
+        <a href="/cart.html">
+          <i class="fa-solid fa-cart-shopping"></i> Cart
+          <span id="cart-count" class="cart-count">0</span>
+        </a>
+      </div>
+    </nav>
+
+    <section id="product_details">
+      <div class="d-product-img">
+        <img id="product-image" src="" alt="Product Image" />
+      </div>
+      <div class="d-product-text">
+        <span id="product-category"></span>
+        <h2 id="product-title"></h2>
+        <p id="product-desc"></p>
+        <span class="price"><span id="product-price"></span>$</span>
+        <div class="quantity">
+          <label>Quantity: </label>
+          <input type="number" id="qty-input" value="1" min="1" />
+        </div>
+        <a href="#" id="add-to-cart-btn" class="btn-primary">Add To Cart</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-container">
+        <!--**comoany-box**-->
+        <div class="footer-company-box">
+          <!--logo-->
+          <a class="footer-logo" href="#"
+            ><img
+              src="../images/BgSub_images_logo.png"
+              alt="logo"
+              width="100px"
+          /></a>
+          <!--details-->
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi quas
+            neque repudiandae nihil.
+          </p>
+          <!--social-box-->
+          <div class="footer-social">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <!--**link-box***-->
+        <div class="footer-link-box">
+          <strong>Main Link's</strong>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Portfolio</a></li>
+          </ul>
+        </div>
+        <!--**link-box***-->
+        <div class="footer-link-box">
+          <strong>External Link's</strong>
+          <ul>
+            <li><a href="#">Our Product's</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Disclaimer</a></li>
+            <li><a href="#">Trem's and Condition's</a></li>
+          </ul>
+        </div>
+        <!--**link-box***-->
+        <div class="footer-link-box">
+          <strong>Our Product's</strong>
+          <ul>
+            <li><a href="#">Skin Care</a></li>
+            <li><a href="#">Hair Care</a></li>
+            <li><a href="#">Nail's Polish</a></li>
+            <li><a href="#">Eye Liner's</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!--**bottom**********************-->
+      <div class="footer-bottom">
+        <span class="footer-owner">Made By Going-To Internet</span>
+        <span class="copyright">&#169; Copyright 2022 - Going-To Internet</span>
+      </div>
+    </footer>
+
+    <script>
+      // Get product data from URL
+      const params = new URLSearchParams(window.location.search);
+      const product = {
+        img: params.get("img") || "../images/n5.png",
+        title: params.get("title") || "Set of Bridel Eye Lashies",
+        price: parseFloat(params.get("price")) || 11.0,
+        desc:
+          params.get("desc") ||
+          "Complete your bridal makeup with these luxurious eye lashies, designed to give you a flawless, romantic gaze on your special day. The soft, lightweight fibers blend seamlessly with your natural lashes, adding just the right amount of volume and length.",
+        cat: params.get("cat") || "",
+      };
+
+      document.getElementById("product-image").src = product.img;
+      document.getElementById("product-title").textContent = product.title;
+      document.getElementById("product-price").textContent =
+        product.price.toFixed(2);
+      document.getElementById("product-desc").textContent = product.desc;
+      document.getElementById("product-category").textContent = product.cat;
+
+      // Load cart
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Function to update cart count
+      function updateCartCount() {
+        const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+        document.getElementById("cart-count").textContent = totalItems;
+      }
+
+      // Initial cart count
+      updateCartCount();
+
+      // Add to cart event
+      document
+        .getElementById("add-to-cart-btn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          const qty = parseInt(document.getElementById("qty-input").value);
+          const itemIndex = cart.findIndex((i) => i.title === product.title);
+          if (itemIndex > -1) {
+            cart[itemIndex].qty += qty;
+          } else {
+            cart.push({ ...product, qty });
+          }
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateCartCount();
+          alert("Added to cart!");
+        });
+    </script>
+  </body>
+</html>

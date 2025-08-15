@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login / Sign Up</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        background: #f2f2f2;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .auth-card {
+        max-width: 400px;
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+        background: #fff;
+        padding: 30px;
+      }
+      .logo {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto 15px;
+      }
+      .switch-link {
+        cursor: pointer;
+        color: #0d6efd;
+      }
+      .switch-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-card">
+      <!-- Logo -->
+      <img src="images/BgSub_images_logo.png" alt="Logo" class="logo" />
+
+      <!-- Title -->
+      <h4 id="form-title" class="text-center mb-4"></h4>
+
+      <!-- Message -->
+      <div id="message" class="text-center mb-2"></div>
+
+      <!-- Login Form -->
+      <form id="login-form">
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="login-email"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="login-password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-dark w-100 mb-2">Login</button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signup-form" style="display: none">
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="signup-name"
+            placeholder="Full Name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="signup-email"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="signup-password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-dark w-100 mb-2">Sign Up</button>
+      </form>
+
+      <!-- Switch -->
+      <p id="toggle-form" class="text-center mt-3 switch-link">
+        Don't have an account? Sign Up
+      </p>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("login-form");
+      const signupForm = document.getElementById("signup-form");
+      const toggleForm = document.getElementById("toggle-form");
+      const formTitle = document.getElementById("form-title");
+      const messageEl = document.getElementById("message");
+
+      toggleForm.addEventListener("click", () => {
+        if (loginForm.style.display !== "none") {
+          loginForm.style.display = "none";
+          signupForm.style.display = "block";
+          formTitle.textContent = "Sign Up";
+          toggleForm.textContent = "Already have an account? Login";
+          messageEl.textContent = "";
+        } else {
+          loginForm.style.display = "block";
+          signupForm.style.display = "none";
+          formTitle.textContent = "Login";
+          toggleForm.textContent = "Don't have an account? Sign Up";
+          messageEl.textContent = "";
+        }
+      });
+
+      // Sign Up
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("signup-name").value;
+        const email = document.getElementById("signup-email").value;
+        const password = document.getElementById("signup-password").value;
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        if (users.some((u) => u.email === email)) {
+          messageEl.textContent = "Email already registered!";
+          messageEl.className = "text-danger text-center";
+          return;
+        }
+
+        users.push({ name, email, password });
+        localStorage.setItem("users", JSON.stringify(users));
+        messageEl.textContent = "Sign up successful! You can login now.";
+        messageEl.className = "text-success text-center";
+        signupForm.reset();
+      });
+
+      // Login
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const user = users.find(
+          (u) => u.email === email && u.password === password
+        );
+        if (user) {
+          messageEl.textContent = `Welcome back, ${user.name}!`;
+          messageEl.className = "text-success text-center";
+          loginForm.reset();
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1000);
+        } else {
+          messageEl.textContent = "Invalid email or password!";
+          messageEl.className = "text-danger text-center";
+        }
+      });
+    </script>
+  </body>
+</html>
